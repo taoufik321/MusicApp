@@ -8,6 +8,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_content">
+
+        <TextView
+            android:text="Condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="138dp"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="144dp"
+            android:id="@+id/textViewCondition" />
+
+        <Button
+            android:text="Foggy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="35dp"
+            android:layout_marginEnd="35dp"
+            android:id="@+id/buttonFoggy" />
+
+        <Button
+            android:text="Sunny"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginStart="28dp"
+            android:id="@+id/buttonSunny"
+            android:layout_alignBaseline="@+id/buttonFoggy"
+            android:layout_alignBottom="@+id/buttonFoggy"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
     <ListView

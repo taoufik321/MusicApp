@@ -12,13 +12,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.application.musicapp.adapter.SlidingMenuAdapter;
 import com.application.musicapp.fragment.Fragment1;
 import com.application.musicapp.fragment.Fragment2;
 import com.application.musicapp.fragment.Fragment3;
 import com.application.musicapp.model.ItemSlideMenu;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +34,14 @@ import java.util.List;
  * Created by Taoufik on 25-12-2016.
  */
 public class MainActivity extends AppCompatActivity {
+
+
+    TextView mConditionTextView;
+    Button mButtonSunny;
+    Button mButtonFoggy;
+
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mConditionRef = mRootRef.child("condition");
 
     private List<ItemSlideMenu> listSliding;
     private SlidingMenuAdapter adapter;
@@ -39,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        // Get UI elements
+        mConditionTextView = (TextView) findViewById(R.id.textViewCondition);
+        mButtonSunny = (Button) findViewById(R.id.buttonSunny);
+        mButtonFoggy = (Button) findViewById(R.id.buttonFoggy);
+
 
         //Init component
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
@@ -79,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed){
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -96,6 +117,43 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
+
+    public void onStart() {
+        super.onStart();
+
+        mConditionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+            String text = dataSnapshot.getValue(String.class);
+            mConditionTextView.setText(text);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mButtonSunny.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                mConditionRef.setValue("Sunny");
+
+            }
+
+        });
+
+        mButtonFoggy.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                mConditionRef.setValue("Foggy");
+
+            }
+
+        });
+    }
+
+
 
 
     @Override
