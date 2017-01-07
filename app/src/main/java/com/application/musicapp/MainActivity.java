@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.graphics.Region;
 import android.net.Uri;
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.os.Build;
 import android.widget.ListView;
 
 import android.app.Fragment;
@@ -42,6 +46,7 @@ import android.widget.MediaController.MediaPlayerControl;
  * Created by Taoufik on 25-12-2016.
  */
 public class MainActivity extends Activity implements MediaPlayerControl {
+    //extends AppCompatActivity {
 
     private List<ItemSlideMenu> listSliding;
     private SlidingMenuAdapter adapter;
@@ -59,11 +64,23 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
     private boolean paused=false, playbackPaused=false;
 
-    private AppCompatActivity mClass;
+    private AppCompatActivity compat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //This was the code for the musicapplication
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                // app-defined int constant
+                return;
+            }
+        }
+
         songView = (ListView)findViewById(R.id.song_list);
         songList = new ArrayList<Song>();
 
@@ -80,66 +97,69 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
         setController();
 
-        //This was the code for the slidingmenu
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-
-        //Init component
-        listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        listSliding = new ArrayList<>();
-        //Add item for sliding list
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_action_settings, "Setting"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_action_about, "About"));
-        listSliding.add(new ItemSlideMenu(R.mipmap.ic_launcher, "Android"));
-        adapter = new SlidingMenuAdapter(this, listSliding);
-        listViewSliding.setAdapter(adapter);
-
-        //Display icon to open/ close sliding list
-        mClass.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //Set title
-        setTitle(listSliding.get(0).getTitle());
-        //item selected
-        listViewSliding.setItemChecked(0, true);
-        //Close menu
-        drawerLayout.closeDrawer(listViewSliding);
-
-        //Display fragment 1 when start
-        replaceFragment(0);
-
-        //Handle on item click
-        listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Set title
-                setTitle(listSliding.get(position).getTitle());
-                //item selected
-                listViewSliding.setItemChecked(position, true);
-                //Replace fragment
-                replaceFragment(position);
-                //Close menu
-                drawerLayout.closeDrawer(listViewSliding);
-            }
-        });
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed){
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                invalidateOptionsMenu();
-            }
-        };
-
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//        //This was the code for the slidingmenu
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.main_activity);
+//
+//        //Init component
+//        listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
+//        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        listSliding = new ArrayList<>();
+//        //Add item for sliding list
+//        listSliding.add(new ItemSlideMenu(R.drawable.ic_action_settings, "Setting"));
+//        listSliding.add(new ItemSlideMenu(R.drawable.ic_action_about, "About"));
+//        listSliding.add(new ItemSlideMenu(R.mipmap.ic_launcher, "Android"));
+//        adapter = new SlidingMenuAdapter(this, listSliding);
+//        listViewSliding.setAdapter(adapter);
+//
+//        //Display icon to open/ close sliding list
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        //compat.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
+//        //Set title
+//        setTitle(listSliding.get(0).getTitle());
+//        //item selected
+//        listViewSliding.setItemChecked(0, true);
+//        //Close menu
+//        drawerLayout.closeDrawer(listViewSliding);
+//
+//        //Display fragment 1 when start
+//        replaceFragment(0);
+//
+//        //Handle on item click
+//        listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //Set title
+//                setTitle(listSliding.get(position).getTitle());
+//                //item selected
+//                listViewSliding.setItemChecked(position, true);
+//                //Replace fragment
+//                replaceFragment(position);
+//                //Close menu
+//                drawerLayout.closeDrawer(listViewSliding);
+//            }
+//        });
+//
+//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed){
+//
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//                invalidateOptionsMenu();
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                super.onDrawerClosed(drawerView);
+//                invalidateOptionsMenu();
+//            }
+//        };
+//
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
+
+    //region MusicApplication
 
     //connect to the service
     private ServiceConnection musicConnection = new ServiceConnection(){
@@ -206,33 +226,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        if(actionBarDrawerToggle.onOptionsItemSelected(item)) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-
-        //menu item selected
-        switch (item.getItemId()) {
-            case R.id.action_shuffle:
-                musicSrv.setShuffle();
-                break;
-            case R.id.action_end:
-                stopService(playIntent);
-                musicSrv=null;
-                System.exit(0);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onDestroy() {
         stopService(playIntent);
         musicSrv=null;
@@ -281,39 +274,6 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
-    }
-
-    //Create method replace fragment
-    private void replaceFragment(int pos) {
-        Fragment fragment = null;
-        switch (pos) {
-            case 0:
-                fragment = new Fragment1();
-                break;
-            case 1:
-                fragment = new Fragment2();
-                break;
-            case 2:
-                fragment = new Fragment3();
-                break;
-            default:
-                fragment = new Fragment1();
-                break;
-        }
-
-        if(null!=fragment) {
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_content, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
-    }
-
-    @Override
     public void start() {
         musicSrv.go();
     }
@@ -327,14 +287,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     @Override
     public int getDuration() {
         if(musicSrv!=null && musicBound && musicSrv.isPng())
-        return musicSrv.getDur();
+            return musicSrv.getDur();
         else return 0;
     }
 
     @Override
     public int getCurrentPosition() {
         if(musicSrv!=null && musicBound && musicSrv.isPng())
-        return musicSrv.getPosn();
+            return musicSrv.getPosn();
         else return 0;
     }
 
@@ -346,7 +306,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     @Override
     public boolean isPlaying() {
         if(musicSrv!=null && musicBound)
-        return musicSrv.isPng();
+            return musicSrv.isPng();
         return false;
     }
 
@@ -395,4 +355,69 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         controller.hide();
         super.onStop();
     }
+    //endregion
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        //This was made for the slidingmenu application
+//        if(actionBarDrawerToggle.onOptionsItemSelected(item)) {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+
+        //This was made for the musicapplication
+        //menu item selected
+        switch (item.getItemId()) {
+            case R.id.action_shuffle:
+                musicSrv.setShuffle();
+                break;
+            case R.id.action_end:
+                stopService(playIntent);
+                musicSrv=null;
+                System.exit(0);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+//    //region SlidingMenuApplication
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+//        actionBarDrawerToggle.syncState();
+//    }
+//
+//    //Create method replace fragment
+//    private void replaceFragment(int pos) {
+//        Fragment fragment = null;
+//        switch (pos) {
+//            case 0:
+//                fragment = new Fragment1();
+//                break;
+//            case 1:
+//                fragment = new Fragment2();
+//                break;
+//            case 2:
+//                fragment = new Fragment3();
+//                break;
+//            default:
+//                fragment = new Fragment1();
+//                break;
+//        }
+//
+//        if(null!=fragment) {
+//            FragmentManager fragmentManager = getFragmentManager();
+//            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//            transaction.replace(R.id.main_content, fragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+//        }
+//    }
+//    //endregion
 }
