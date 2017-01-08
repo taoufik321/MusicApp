@@ -36,6 +36,8 @@ public class MusicService extends Service implements
     private boolean shuffle=false;
     private Random rand;
 
+    public MusicController controller;
+
     public void onCreate(){
         //create the service
         super.onCreate();
@@ -70,7 +72,7 @@ public class MusicService extends Service implements
     }
 
     public class MusicBinder extends Binder {
-        MusicService getService() {
+        public MusicService getService() {
             return MusicService.this;
         }
     }
@@ -137,7 +139,7 @@ public class MusicService extends Service implements
     public void onPrepared(MediaPlayer mp) {
         //start playback
         mp.start();
-
+controller.show(0);
         Intent notIntent = new Intent(this, MainActivity.class);
         notIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendInt = PendingIntent.getActivity(this, 0,
