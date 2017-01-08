@@ -27,8 +27,10 @@ import com.application.musicapp.fragment.Fragment1;
 import com.application.musicapp.fragment.Fragment2;
 import com.application.musicapp.fragment.Fragment3;
 import com.application.musicapp.model.ItemSlideMenu;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,11 +46,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener {
 
     private MediaPlayer mMediaplayer;
+    private ListView mListView;
     Button mPlay;
-
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mSong = mRootRef.child("Song").child("SongDWURl");
-
 
 
     @Override
@@ -57,9 +58,40 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
         setContentView(R.layout.main_activity);
         mMediaplayer = new MediaPlayer();
         mMediaplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        MusicFromDownload();
+        mListView = (ListView) findViewById(R.id.listofdata);
+        listofSongs();
+
+        mPlay = (Button) findViewById(R.id.buttonPlay);
+        mPlay.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                MusicFromDownload();
+            }
+        });
     }
 
+
+    public void listofSongs() {
+        final DatabaseReference mSonglist = mRootRef.child("SongList");
+        ListView songView = (ListView) findViewById(R.id.listofdata);
+        FirebaseListAdapter<Song> mAdapter = new FirebaseListAdapter<Song>(this, Song.class, android.R.layout.two_line_list_item, mSonglist) {
+            @Override
+            protected void populateView(View v, Song model, int position) {
+
+                ((TextView) v.findViewById(android.R.id.text1)).setText(model.getSongName());
+                ((TextView) v.findViewById(android.R.id.text2)).setText(model.getCategory());
+
+            }
+
+        };
+        songView.setAdapter(mAdapter);
+    }
+
+    //if selected listview send key in databaserefence
+    //play music if song is selected
+
+    ///play the music from out the database
     public void MusicFromDownload(){
         mSong.addValueEventListener(new ValueEventListener() {
            @Override
@@ -94,58 +126,6 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
            }
 
        });
-
-    }
-
-
-    private void fetchAudioUrlFromFirebase() {
-        mSong.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                try {
-                    // Download url of file
-                    mMediaplayer.setDataSource(value);
-                    // wait for media player to get prepare
-                    mMediaplayer.setOnPreparedListener(MainActivity.this);
-                    mMediaplayer.prepareAsync();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        final FirebaseStorage storage = FirebaseStorage.getInstance();
-// Create a storage reference from our app
-        String text = "gs://musicapp-ed23e.appspot.com/stars_not-for-profit-use.mp3";
-        StorageReference storageRef = storage.getReferenceFromUrl(text);
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                try {
-                    // Download url of file
-                    final String url = uri.toString();
-                    mMediaplayer.setDataSource(url);
-                    // wait for media player to get prepare
-                    mMediaplayer.setOnPreparedListener(MainActivity.this);
-                    mMediaplayer.prepareAsync();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("TAG", e.getMessage());
-                    }
-                });
 
     }
 

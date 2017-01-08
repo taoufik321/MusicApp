@@ -9,69 +9,35 @@
     android:layout_height="match_parent"
     android:id="@+id/main_content">
 
-        <TextView
-            android:text="Condition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="138dp"
-            android:layout_marginStart="138dp"
-            android:layout_marginTop="144dp"
-            android:id="@+id/textViewCondition" />
-
-        <Button
-            android:text="Foggy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="35dp"
-            android:layout_marginEnd="35dp"
-            android:id="@+id/buttonFoggy" />
-
-        <Button
-            android:text="Sunny"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
-            android:layout_marginStart="28dp"
-            android:id="@+id/buttonSunny"
-            android:layout_alignBaseline="@+id/buttonFoggy"
-            android:layout_alignBottom="@+id/buttonFoggy"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
         <Button
             android:text="Download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonSunny"
-            android:layout_alignLeft="@+id/buttonSunny"
-            android:layout_alignStart="@+id/buttonSunny"
-            android:layout_marginTop="41dp"
-            android:id="@+id/buttonDownload" />
+            android:id="@+id/buttonDownload"
+            android:layout_marginBottom="134dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/buttonPlay"
+            android:layout_toStartOf="@+id/buttonPlay" />
 
         <Button
             android:text="Play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/buttonPlay"
+            android:layout_marginRight="47dp"
+            android:layout_marginEnd="47dp"
+            android:layout_alignBaseline="@+id/buttonDownload"
             android:layout_alignBottom="@+id/buttonDownload"
-            android:layout_alignRight="@+id/buttonFoggy"
-            android:layout_alignEnd="@+id/buttonFoggy"
-            android:id="@+id/buttonPlay" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listofdata"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/textViewCondition"
-            android:layout_alignStart="@+id/textViewCondition"
-            android:layout_marginTop="47dp"
-            android:id="@+id/textViewSong" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
