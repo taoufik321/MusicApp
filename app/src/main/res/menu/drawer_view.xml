@@ -9,10 +9,10 @@
             android:id="@+id/nav_library"
 
             android:title="@string/library" />
-        <item
-            android:id="@+id/nav_playlists"
+        <!--<item-->
+            <!--android:id="@+id/nav_playlists"-->
 
-            android:title="@string/playlists" />
+            <!--android:title="@string/playlists" />-->
         <item
             android:id="@+id/nav_queue"
 
@@ -27,10 +27,10 @@
     <group
         android:id="@+id/group2"
         android:checkableBehavior="none">
-        <item
+        <!--<item-->
 
-            android:id="@+id/nav_settings"
-            android:title="@string/settings" />
+            <!--android:id="@+id/nav_settings"-->
+            <!--android:title="@string/settings" />-->
 
         <item
 

@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
     };
     Runnable navigatePlaylist = new Runnable() {
         public void run() {
-            navigationView.getMenu().findItem(R.id.nav_playlists).setChecked(true);
+//            navigationView.getMenu().findItem(R.id.nav_playlists).setChecked(true);
             Fragment fragment = new PlaylistFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.hide(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
@@ -279,18 +279,18 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
 
         if (!isDarkTheme) {
             navigationView.getMenu().findItem(R.id.nav_library).setIcon(R.drawable.library_music);
-            navigationView.getMenu().findItem(R.id.nav_playlists).setIcon(R.drawable.playlist_play);
+//            navigationView.getMenu().findItem(R.id.nav_playlists).setIcon(R.drawable.playlist_play);
             navigationView.getMenu().findItem(R.id.nav_queue).setIcon(R.drawable.music_note);
             navigationView.getMenu().findItem(R.id.nav_nowplaying).setIcon(R.drawable.bookmark_music);
-            navigationView.getMenu().findItem(R.id.nav_settings).setIcon(R.drawable.settings);
+//            navigationView.getMenu().findItem(R.id.nav_settings).setIcon(R.drawable.settings);
             navigationView.getMenu().findItem(R.id.nav_help).setIcon(R.drawable.help_circle);
             navigationView.getMenu().findItem(R.id.nav_about).setIcon(R.drawable.information);
         } else {
             navigationView.getMenu().findItem(R.id.nav_library).setIcon(R.drawable.library_music_white);
-            navigationView.getMenu().findItem(R.id.nav_playlists).setIcon(R.drawable.playlist_play_white);
+//            navigationView.getMenu().findItem(R.id.nav_playlists).setIcon(R.drawable.playlist_play_white);
             navigationView.getMenu().findItem(R.id.nav_queue).setIcon(R.drawable.music_note_white);
             navigationView.getMenu().findItem(R.id.nav_nowplaying).setIcon(R.drawable.bookmark_music_white);
-            navigationView.getMenu().findItem(R.id.nav_settings).setIcon(R.drawable.settings_white);
+//            navigationView.getMenu().findItem(R.id.nav_settings).setIcon(R.drawable.settings_white);
             navigationView.getMenu().findItem(R.id.nav_help).setIcon(R.drawable.help_circle_white);
             navigationView.getMenu().findItem(R.id.nav_about).setIcon(R.drawable.information_white);
         }
@@ -305,10 +305,10 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
                 runnable = navigateLibrary;
 
                 break;
-            case R.id.nav_playlists:
-                runnable = navigatePlaylist;
-
-                break;
+//            case R.id.nav_playlists:
+//                runnable = navigatePlaylist;
+//
+//                break;
             case R.id.nav_nowplaying:
                 NavigationUtils.navigateToNowplaying(MainActivity.this, false);
                 break;
@@ -316,9 +316,9 @@ public class MainActivity extends BaseActivity implements ATEActivityThemeCustom
                 runnable = navigateQueue;
 
                 break;
-            case R.id.nav_settings:
-                NavigationUtils.navigateToSettings(MainActivity.this);
-                break;
+//            case R.id.nav_settings:
+//                NavigationUtils.navigateToSettings(MainActivity.this);
+//                break;
             case R.id.nav_help:
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 Uri data = Uri.parse("mailto:spandanjoshi1997@gmail.com");

@@ -13,15 +13,15 @@
         android:id="@+id/popup_song_addto_queue"
         android:title="Add to queue" />
 
-    <item
-        android:id="@+id/popup_song_addto_playlist"
-        android:title="Add to playlist" />
+    <!--<item-->
+        <!--android:id="@+id/popup_song_addto_playlist"-->
+        <!--android:title="Add to playlist" />-->
 
-    <item
-        android:id="@+id/popup_song_goto_album"
-        android:title="Go to album" />
+    <!--<item-->
+        <!--android:id="@+id/popup_song_goto_album"-->
+        <!--android:title="Go to album" />-->
 
-    <item
-        android:id="@+id/popup_song_goto_artist"
-        android:title="Go to artist" />
+    <!--<item-->
+        <!--android:id="@+id/popup_song_goto_artist"-->
+        <!--android:title="Go to artist" />-->
 </menu>

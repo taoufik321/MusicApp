@@ -109,9 +109,9 @@ public class PlaylistFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_new_playlist:
-                CreatePlaylistDialog.newInstance().show(getChildFragmentManager(), "CREATE_PLAYLIST");
-                return true;
+//            case R.id.action_new_playlist:
+//                CreatePlaylistDialog.newInstance().show(getChildFragmentManager(), "CREATE_PLAYLIST");
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }

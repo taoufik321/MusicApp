@@ -307,26 +307,26 @@ public class AlbumDetailFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_sort_by_az:
-                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_A_Z);
-                reloadAdapter();
-                return true;
-            case R.id.menu_sort_by_za:
-                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_Z_A);
-                reloadAdapter();
-                return true;
-            case R.id.menu_sort_by_year:
-                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_YEAR);
-                reloadAdapter();
-                return true;
-            case R.id.menu_sort_by_duration:
-                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_DURATION);
-                reloadAdapter();
-                return true;
-            case R.id.menu_sort_by_track_number:
-                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_TRACK_LIST);
-                reloadAdapter();
-                return true;
+//            case R.id.menu_sort_by_az:
+//                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_A_Z);
+//                reloadAdapter();
+//                return true;
+//            case R.id.menu_sort_by_za:
+//                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_Z_A);
+//                reloadAdapter();
+//                return true;
+//            case R.id.menu_sort_by_year:
+//                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_YEAR);
+//                reloadAdapter();
+//                return true;
+//            case R.id.menu_sort_by_duration:
+//                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_DURATION);
+//                reloadAdapter();
+//                return true;
+//            case R.id.menu_sort_by_track_number:
+//                mPreferences.setAlbumSongSortOrder(SortOrder.AlbumSongSortOrder.SONG_TRACK_LIST);
+//                reloadAdapter();
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }

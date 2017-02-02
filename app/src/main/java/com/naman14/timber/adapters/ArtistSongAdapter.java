@@ -117,20 +117,20 @@ public class ArtistSongAdapter extends RecyclerView.Adapter<ArtistSongAdapter.It
                                 ids[0] = arraylist.get(position + 1).id;
                                 MusicPlayer.playNext(mContext, ids, -1, TimberUtils.IdType.NA);
                                 break;
-                            case R.id.popup_song_goto_album:
-                                NavigationUtils.goToAlbum(mContext, arraylist.get(position + 1).albumId);
-                                break;
-                            case R.id.popup_song_goto_artist:
-                                NavigationUtils.goToArtist(mContext, arraylist.get(position + 1).artistId);
-                                break;
+//                            case R.id.popup_song_goto_album:
+//                                NavigationUtils.goToAlbum(mContext, arraylist.get(position + 1).albumId);
+//                                break;
+//                            case R.id.popup_song_goto_artist:
+//                                NavigationUtils.goToArtist(mContext, arraylist.get(position + 1).artistId);
+//                                break;
                             case R.id.popup_song_addto_queue:
                                 long[] id = new long[1];
                                 id[0] = arraylist.get(position + 1).id;
                                 MusicPlayer.addToQueue(mContext, id, -1, TimberUtils.IdType.NA);
                                 break;
-                            case R.id.popup_song_addto_playlist:
-                                AddPlaylistDialog.newInstance(arraylist.get(position + 1)).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
-                                break;
+//                            case R.id.popup_song_addto_playlist:
+//                                AddPlaylistDialog.newInstance(arraylist.get(position + 1)).show(((AppCompatActivity) mContext).getSupportFragmentManager(), "ADD_PLAYLIST");
+//                                break;
                         }
                         return false;
                     }
